@@ -2,8 +2,6 @@ const esbuild = require('esbuild')
 const util = require('util')
 const exec = util.promisify(require('child_process').exec)
 
-// tsc .\src\browser.ts --declaration --emitDeclarationOnly --outDir dist
-
 const buildNode = async () => {
 	await Promise.all([
 		esbuild.build({
@@ -23,11 +21,13 @@ const buildNode = async () => {
 		}),
 
 		exec(
-			'tsc ./src/node.ts --declaration --emitDeclarationOnly --outDir dist',
+			'dts-bundle-generator -o dist/node.d.ts src/node.ts',
 		).catch(error => {
 			throw new Error(error)
 		}),
 	])
+
+	console.log('node build succeed!!')
 }
 
 const buildBrowser = async () => {
@@ -41,18 +41,20 @@ const buildBrowser = async () => {
 		}),
 
 		exec(
-			'tsc ./src/browser.ts --declaration --emitDeclarationOnly --outDir dist',
+			'dts-bundle-generator -o dist/browser.d.ts src/browser.ts',
 		).catch(error => {
 			throw new Error(error)
 		}),
 	])
+
+	console.log('browser build succeed!!')
 }
 
 ;(async () => {
 	try {
-		await buildNode()
-		await buildBrowser()
-		console.log('build succeed!!')
+		await Promise.all([buildNode(), buildBrowser()])
+		console.log('---')
+		console.log('all succeed!!')
 	} catch (error) {
 		console.error(error)
 		process.exit(1)

@@ -1,5 +1,5 @@
 {
-  "name": "jsutil",
+  "name": "@575/jsutil",
   "version": "0.0.0",
   "description": "",
   "main": "./dist/index.js",
@@ -20,7 +20,7 @@
     }
   },
   "scripts": {
-    "prebuild": "shx rm -rf dist",
+    "prebuild": "concurrently \"shx rm -rf dist\" \"shx mkdir dist\"",
     "build": "node build.js"
   },
   "repository": {
@@ -37,6 +37,7 @@
   "devDependencies": {
     "@types/node": "^18.7.15",
     "concurrently": "^7.3.0",
+    "dts-bundle-generator": "^6.13.0",
     "esbuild": "^0.15.7",
     "prettier": "^2.7.1",
     "react": "^18.2.0",
