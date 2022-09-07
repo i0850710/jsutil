@@ -1,7 +1,7 @@
 {
   "name": "575util",
   "version": "0.0.0",
-  "description": "",
+  "description": "個人用包",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "files": [
