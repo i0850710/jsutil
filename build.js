@@ -1,5 +1,6 @@
 const esbuild = require('esbuild')
-// const childProcess = require('child_process')
+const util = require('util')
+const exec = util.promisify(require('child_process').exec)
 
 // tsc .\src\browser.ts --declaration --emitDeclarationOnly --outDir dist
 
@@ -20,17 +21,31 @@ const buildNode = async () => {
 			outfile: 'dist/node.mjs',
 			entryPoints: ['./src/node.ts'],
 		}),
+
+		exec(
+			'tsc ./src/node.ts --declaration --emitDeclarationOnly --outDir dist',
+		).catch(error => {
+			throw new Error(error)
+		}),
 	])
 }
 
 const buildBrowser = async () => {
-	await esbuild.build({
-		format: 'esm',
-		target: 'es2020',
-		bundle: true,
-		outfile: 'dist/browser.mjs',
-		entryPoints: ['./src/browser.ts'],
-	})
+	await Promise.all([
+		esbuild.build({
+			format: 'esm',
+			target: 'es2020',
+			bundle: true,
+			outfile: 'dist/browser.mjs',
+			entryPoints: ['./src/browser.ts'],
+		}),
+
+		exec(
+			'tsc ./src/browser.ts --declaration --emitDeclarationOnly --outDir dist',
+		).catch(error => {
+			throw new Error(error)
+		}),
+	])
 }
 
 ;(async () => {
