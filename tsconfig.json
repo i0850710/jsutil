@@ -7,8 +7,12 @@
     "moduleResolution": "node",
     "noUncheckedIndexedAccess": true,
     "exactOptionalPropertyTypes": true,
-    "baseUrl": "."
+    "baseUrl": ".",
+    "paths": {
+      "575util/node": ["./packages/node/index.ts"],
+      "575util/browser": ["./packages/browser/index.ts"]
+    }
   },
-  "include": ["src/**/*", "tests/**/*"],
+  "include": ["packages/**/*", "tests/**/*"],
   "exclude": ["node_modules", "dist"]
 }

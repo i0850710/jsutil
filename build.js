@@ -9,7 +9,7 @@ const buildNode = async () => {
 			target: 'node12',
 			bundle: true,
 			outfile: 'dist/node.cjs',
-			entryPoints: ['./src/node.ts'],
+			entryPoints: ['./packages/node/index.ts'],
 		}),
 
 		esbuild.build({
@@ -17,11 +17,11 @@ const buildNode = async () => {
 			target: 'es2020',
 			bundle: true,
 			outfile: 'dist/node.mjs',
-			entryPoints: ['./src/node.ts'],
+			entryPoints: ['./packages/node/index.ts'],
 		}),
 
 		exec(
-			'dts-bundle-generator -o dist/node.d.ts src/node.ts',
+			'dts-bundle-generator -o dist/node.d.ts packages/node/index.ts',
 		).catch(error => {
 			throw new Error(error)
 		}),
@@ -37,11 +37,11 @@ const buildBrowser = async () => {
 			target: 'es2020',
 			bundle: true,
 			outfile: 'dist/browser.mjs',
-			entryPoints: ['./src/browser.ts'],
+			entryPoints: ['./packages/browser/index.ts'],
 		}),
 
 		exec(
-			'dts-bundle-generator -o dist/browser.d.ts src/browser.ts',
+			'dts-bundle-generator -o dist/browser.d.ts packages/browser/index.ts',
 		).catch(error => {
 			throw new Error(error)
 		}),
